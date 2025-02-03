@@ -5,6 +5,16 @@ import requests
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all domains
 
+# Test route for checking if the app is working
+@app.route('/')
+def hello():
+    return "Flask API is running!"
+
+# Test route for more debugging
+@app.route('/test')
+def test_route():
+    return "Test route is working!"
+
 def is_armstrong(num):
     """Check if a number is an Armstrong number."""
     digits = [int(digit) for digit in str(num)]
