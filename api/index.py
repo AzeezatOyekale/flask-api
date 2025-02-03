@@ -5,16 +5,6 @@ import requests
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all domains
 
-# Test route for checking if the app is working
-@app.route('/')
-def hello():
-    return "Flask API is running!"
-
-# Test route for more debugging
-@app.route('/test')
-def test_route():
-    return "Test route is working!"
-
 def is_armstrong(num):
     """Check if a number is an Armstrong number."""
     digits = [int(digit) for digit in str(num)]
@@ -47,29 +37,40 @@ def get_number_properties(num):
 def classify_number():
     try:
         number = request.args.get('number')
+        
+        # Validate the input
         if number is None or not number.isdigit():
-            return jsonify({"error": True, "message": "Invalid input. Please provide a valid number."}), 400
+            return jsonify({
+                "error": True,
+                "message": "Invalid input. Please provide a valid number."
+            }), 400
         
+        # Convert to an integer
         number = int(number)
+
+        # Get properties and fun fact
         properties = get_number_properties(number)
-        
-        # Fetching fun fact from Numbers API
         fun_fact_response = requests.get(f"http://numbersapi.com/{number}/math?json")
-        fun_fact = fun_fact_response.json().get("text", "No fact available")
+        fun_fact = fun_fact_response.json().get("text", "No fun fact available")
         
-        # Creating the response with additional prime and perfect number checks
+        # Build the response
         response = {
             "number": number,
-            "is_prime": is_prime(number),  # Call is_prime function
-            "is_perfect": is_perfect(number),  # Call is_perfect function
+            "is_prime": is_prime(number),
+            "is_perfect": is_perfect(number),
             "properties": properties,
             "digit_sum": sum(int(digit) for digit in str(number)),
             "fun_fact": fun_fact
         }
         
+        # Return the valid JSON response
         return jsonify(response), 200
+    
     except Exception as e:
-        return jsonify({"error": True, "message": str(e)}), 500
+        return jsonify({
+            "error": True,
+            "message": str(e)
+        }), 500
 
 if __name__ == "__main__":
     app.run(debug=True)
