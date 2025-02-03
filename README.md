@@ -2,6 +2,15 @@
 
 This is a Flask-based API that accepts a number and returns interesting mathematical properties (e.g., whether it's prime, perfect, Armstrong, odd, or even) along with a fun fact about the number.
 
+## Live API
+
+You can test the live API at the following URL:
+
+[Live API URL]()
+https://flask-j9rzh5ffh-azeezatoyekales-projects.vercel.app/
+Simply send requests to this endpoint to interact with the API.
+
+
 ## Table of Contents
 
 1. [Project Description](#project-description)
