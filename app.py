@@ -11,6 +11,20 @@ def is_armstrong(num):
     power = len(digits)
     return sum(d ** power for d in digits) == num
 
+def is_prime(num):
+    """Check if a number is prime."""
+    if num <= 1:
+        return False
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def is_perfect(num):
+    """Check if a number is perfect."""
+    divisors_sum = sum(i for i in range(1, num) if num % i == 0)
+    return divisors_sum == num
+
 def get_number_properties(num):
     """Determine properties of the number."""
     properties = []
@@ -33,10 +47,11 @@ def classify_number():
         fun_fact_response = requests.get(f"http://numbersapi.com/{number}/math?json")
         fun_fact = fun_fact_response.json().get("text", "No fact available")
         
+        # Creating the response with additional prime and perfect number checks
         response = {
             "number": number,
-            "is_prime": False,  # You can add logic to check for prime numbers
-            "is_perfect": False, # You can add logic to check for perfect numbers
+            "is_prime": is_prime(number),  # Call is_prime function
+            "is_perfect": is_perfect(number),  # Call is_perfect function
             "properties": properties,
             "digit_sum": sum(int(digit) for digit in str(number)),
             "fun_fact": fun_fact
@@ -48,4 +63,3 @@ def classify_number():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
