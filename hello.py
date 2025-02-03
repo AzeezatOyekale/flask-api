@@ -1,1 +1,0 @@
-print("Hello Azeezat! Welcome to python!")
